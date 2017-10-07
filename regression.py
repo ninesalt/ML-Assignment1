@@ -2,12 +2,17 @@ import numpy as np
 import pandas as pd
 from math import tanh
 
+
+def normalize(vector):
+    return np.divide(vector, np.sqrt(sum(vector ** 2)))
+
+
 flight_data = pd.read_csv('UA.csv')
 flight_data.dropna(axis=0, how='any', subset=[
                    'DISTANCE', 'ELAPSED_TIME'], inplace=True)
 
-feature = np.array(flight_data['DISTANCE'])
-target = np.array(flight_data['ELAPSED_TIME'])
+feature = normalize(np.array(flight_data['DISTANCE']))
+target = normalize(np.array(flight_data['ELAPSED_TIME']))
 learning_rate = 0.2
 
 weight = np.random.randn()
