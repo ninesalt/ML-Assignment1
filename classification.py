@@ -25,13 +25,12 @@ while mispredictions > error_tolerance:
         inputs = features[i]
         expected = targets[i]
 
-        summation = dot(inputs, weights) - bias
-        result = 1 if summation > 0 else 0
+        summation = dot(inputs, weights) + bias
+        predicted = 1 if summation >= 0 else 0
+        error = expected - predicted
 
-        error = result - expected
-
-        weights -= learning_rate * error * inputs
-        bias -= learning_rate * error * -1
+        weights += learning_rate * error * inputs
+        bias += learning_rate * error
 
         if error != 0:
             errors += 1
@@ -52,11 +51,13 @@ v11 = [value for _, value in features]
 
 w0 = bias
 w1, w2 = weights
-x = arange(0, 20)
-y = (w0 / w2) - (w1 * x / w2)
+x = arange(0, 15)
+y = (-w0 / w2) - (w1 * x / w2)
 
 colors = [value / 255 for value in targets]
 
 plt.scatter(v2, v11, c=colors)
+plt.xlabel('V2')
+plt.ylabel('V11')
 plt.plot(x, y, 'k-')
 plt.show()
