@@ -24,8 +24,8 @@ training_num = 80 * len(feature) // 100
 train_x = feature[:training_num]
 train_y = target[:training_num]
 
-test_x = feature[training_num + 1:]
-test_y = target[training_num + 1:]
+test_x = feature[training_num:]
+test_y = target[training_num:]
 
 mean_errors = []
 
