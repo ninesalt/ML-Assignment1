@@ -37,14 +37,14 @@ for _ in range(10):
         inputs = train_x[i]
         actual = train_y[i]
 
-        summation = np.dot(inputs, weight) - bias
+        summation = np.dot(inputs, weight) + bias
 
         # predicted = 1 / (1 + np.exp(-summation))  # sigmoid function
         predicted = tanh(summation)
-        error = predicted - actual
+        error = actual - predicted
 
-        weight -= learning_rate * error * inputs
-        bias -= learning_rate * error * -1
+        weight += learning_rate * error * inputs
+        bias += learning_rate * error
 
     # mean_errors.append(error**2)
     # mean = np.mean(mean_errors)
@@ -60,9 +60,10 @@ for i in range(len(test_x)):
     inputs = test_x[i]
     actual = test_y[i]
 
-    summation = np.dot(inputs, weight) - bias
+    summation = np.dot(inputs, weight) + bias
     predicted = tanh(summation)
-    error = predicted - actual
+    error = actual - predicted
+
     mean_errors.append(error ** 2)
 
 print('Mean square of errors: ', np.mean(mean_errors))
